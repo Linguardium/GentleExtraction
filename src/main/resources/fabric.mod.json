@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "gentleextraction",
+	"version": "${version}",
+	"name": "GentleExtraction",
+	"description": "When you crouch, you can break blocks very carefully",
+	"authors": [
+		"Linguardium"
+	],
+	"license": "MIT",
+	"icon": "assets/gentleextraction/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"mod.linguardium.gentleextraction.GentleExtraction"
+		],
+		"client": [
+			"mod.linguardium.gentleextraction.GentleExtractionClient"
+		]
+	},
+	"mixins": [
+		"gentleextraction.mixins.json",
+		{
+			"config": "gentleextraction.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.15.6",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}

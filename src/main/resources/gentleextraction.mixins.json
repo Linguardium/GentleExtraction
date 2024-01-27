@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "mod.linguardium.gentleextraction.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MatchToolLootConditionMixin",
+    "PlayerEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}
