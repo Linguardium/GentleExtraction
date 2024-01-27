@@ -2,7 +2,9 @@ package mod.linguardium.gentleextraction;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.network.PacketByteBuf;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -14,10 +16,21 @@ public class Config {
     private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("gentle_extraction.json");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    public float breakDivisor = 10.0f;
-    public boolean useBlackList = true;
-    public boolean useWhiteList = false;
+    public float breakDivisor;
+    public boolean useBlackList;
+    public boolean useWhiteList;
 
+    public Config() {
+        this(10.0f,true,false);
+    }
+    public Config(float divisor, boolean blacklist, boolean whitelist) {
+        breakDivisor = divisor;
+        useBlackList = blacklist;
+        useWhiteList = whitelist;
+    }
+    public Config(PacketByteBuf buf) {
+        this(buf.readFloat(),buf.readBoolean(),buf.readBoolean());
+    }
     public static void saveConfig() {
         GentleExtraction.LOGGER.info("Saving configuraiton");
         try {
@@ -42,5 +55,12 @@ public class Config {
         }
         INSTANCE = new Config();
         saveConfig();
+    }
+    public static PacketByteBuf toPacketBuf() {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeFloat(Config.INSTANCE.breakDivisor);
+        buf.writeBoolean(Config.INSTANCE.useBlackList);
+        buf.writeBoolean(Config.INSTANCE.useWhiteList);
+        return buf;
     }
 }
