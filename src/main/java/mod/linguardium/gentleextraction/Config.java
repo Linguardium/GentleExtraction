@@ -15,8 +15,11 @@ public class Config {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public float breakDivisor = 10.0f;
+    public boolean useBlackList = true;
+    public boolean useWhiteList = false;
 
     public static void saveConfig() {
+        GentleExtraction.LOGGER.info("Saving configuraiton");
         try {
             Files.writeString(CONFIG_PATH,GSON.toJson(INSTANCE));
         } catch (IOException e) {
@@ -25,6 +28,7 @@ public class Config {
         }
     }
     public static void loadConfig() {
+        GentleExtraction.LOGGER.info("Loading configuration");
         try {
             if (Files.exists(CONFIG_PATH)) {
                 INSTANCE = GSON.fromJson(Files.readString(CONFIG_PATH, StandardCharsets.UTF_8), Config.class);
